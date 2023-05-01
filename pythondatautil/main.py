@@ -52,7 +52,7 @@ class DataUtil:
             raise ValueError("ファイル名は文字列である必要があります")
 
         if "" == order_file_name:
-            file_name = self.__getTmpName(ext)
+            return self.__getTmpName(ext)
 
         if os.path.isdir(file_name):
             raise ValueError("フォルダパスを含める場合はファイル名も指定してください")
