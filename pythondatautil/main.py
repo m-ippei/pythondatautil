@@ -190,6 +190,12 @@ class DataUtil:
         with open(self.__getFileNameHelper(filename),mode='w',encoding='utf-8') as f:
             f.write(txt)
 
+    def w_log(self,txt,filename = ""):
+        """テキストをログ形式で書き出す
+        """
+        with open(self.__getFileNameHelper(filename),mode='a',encoding='utf-8') as f:
+            f.write(f"{txt}\n")
+
     def w_list(self,content_list,filename = ""):
         """改行区切りのリストを書き出す
         """
