@@ -47,6 +47,7 @@ class DataUtil:
         """
 
         file_name = order_file_name
+        file_name_head,order_ext = os.path.splitext(file_name)
 
         if type(order_file_name) != str:
             raise ValueError("ファイル名は文字列である必要があります")
@@ -58,7 +59,6 @@ class DataUtil:
             raise ValueError("フォルダパスを含める場合はファイル名も指定してください")
         
         if os.path.exists(os.path.dirname(file_name)):
-            order_ext = os.path.splitext(file_name)[1]
             if order_ext:
                 if ext != order_ext:
                     raise ValueError(f"有効な拡張子ではありません。{os.path.basename(file_name)}")
@@ -67,7 +67,10 @@ class DataUtil:
 
         else:
             if "" == os.path.dirname(file_name):
-                file_name = f"{file_name}{ext}"
+                if order_ext:
+                    return file_name
+                else:
+                    file_name = f"{file_name_head}{ext}"
             else:
                 raise ValueError("存在するフォルダを指定してください。")
         
