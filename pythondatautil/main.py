@@ -193,11 +193,24 @@ class DataUtil:
         with open(self.__getFileNameHelper(filename),mode='w',encoding='utf-8') as f:
             f.write(txt)
 
-    def w_log(self,txt,filename = ""):
+    def w_log(self,content,filename = ""):
         """テキストをログ形式で書き出す
         """
+        if type(content) == str:
+            pass
+        elif type(content) == list:
+            content = ",".join([str(v) for v in content])
+        elif type(content) == tuple:
+            content = ",".join([str(v) for v in content])
+        else:
+            content = str(content)
+
+        if filename == "":
+            # w_logでファイル名を指定した際に、tmpファイルを行ごとに作成させないため。
+            filename = self.yyyymmdd       
+
         with open(self.__getFileNameHelper(filename),mode='a',encoding='utf-8') as f:
-            f.write(f"{txt}\n")
+            f.write(f"{content}\n")
 
     def w_list(self,content_list,filename = ""):
         """改行区切りのリストを書き出す

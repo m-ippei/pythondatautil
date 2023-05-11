@@ -1,9 +1,19 @@
 # pythondatautil
-Pythonでちょっとしたファイルの読み込みや書き出しをサポートするライブラリ
+Pythonのファイル処理をより楽に行うためのライブラリ
 
-## インストール
+
+## シェルコマンド一覧
+#### インストール
 ```console
-$ python -m pip install git+https://github.com/m-ippei/pythondatautil.git
+python -m pip install git+https://github.com/m-ippei/pythondatautil.git
+```
+#### アップデート
+```console
+python -m pip install git+https://github.com/m-ippei/pythondatautil.git -U
+```
+#### アンインストール
+```console
+python -m pip uninstall pythondatautil
 ```
 
 ## 使い方
@@ -46,7 +56,7 @@ r_auto,w_auto の自動読み込みおよび自動書き込み対象は⭐️マ
 ### w:Write系
 * w_auto(any_data) ファイルの中身から判断して自動でファイル書き出し ※辞書型のデフォルト書き出しはw_dict(dict)
 * w_txt(some_string) テキスト書き込み
-* w_log(some_string) ログテキスト書き込み　追記+改行
+* w_log(string or list ...) ログテキスト書き込み　追記+改行
 * w_list(list) リスト書き込み 改行区切り ⭐️
 * w_csv(list) 2次元リスト書き込み　通常CSV書き込み 拡張子は.txt ※エクセルで直接開くことが可能な文字コードShift_JIS形式のcsv書き出しは対応していません ⭐️
 * w_csv_lf(list) w_csvの改行コードがLFバージョン
@@ -61,12 +71,10 @@ r_auto,w_auto の自動読み込みおよび自動書き込み対象は⭐️マ
 * yyyymmdd YYYYMMDD形式の現在の日付文字列を返す　→例:print(du.yyyymmdd)
 
 #### ファイル書き込み時のfilename省略
-同じ階層からtmp<数字>のファイル名を見つけ出し、<maxの数字>+1の連番で作成。
+* 同じ階層からtmp<数字>のファイル名を見つけ出し、<maxの数字>+1の連番で作成。
+* w_logの場合でfilenameを省略した場合は、yyyymmdd.txtでファイルを作成
 
 ## 備考
 文字コードはUTF-8のみが対象
 
-## アンインストール
-```console
-$ python -m pip uninstall pythondatautil
-```
+
