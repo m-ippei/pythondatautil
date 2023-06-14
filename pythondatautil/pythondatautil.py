@@ -91,6 +91,47 @@ class DataUtil:
             else:
                 return False
     
+    def isSameContentLength_2dList(self,content_list):
+
+        """2次元Listの中身のListの個数が揃っているかのチェック
+        
+        ・List型のデータが全てList型として入っている場合は、それぞれの個数が合っているかの確認
+        ・List型のデータが全てList型として入っていない場合で、List型が含まれる場合はエラーとする
+
+        Args:
+            content_list (list): チェックデータ
+
+        Returns:
+            bool
+        """
+
+        if type(content_list) != list:
+            raise ValueError("引数:content_listはlist型である必要があります。")
+        
+        content_list_len = len(content_list)
+
+        if content_list_len > 0:
+            #リスト型の中身が全てリスト型である場合
+            if len([v for v in content_list if type(v) == list]) == content_list_len:
+                
+                item_len = len(content_list[0])
+                item_len_index = 1
+
+                for index,v in enumerate(content_list,start=1):
+                    
+                    if item_len != len(v):
+                        raise ValueError(f"一致しないデータ数 {item_len_index}行目:{item_len}個,{index}行目:{len(v)}個")
+                
+                    item_len_index = index
+
+            else:
+                #リスト型の中身が全てリスト型でない場合で、List型が含まれる場合
+                if len([v for v in content_list if type(v) == list ]) > 0:
+                    raise ValueError(f"list型の中にList型とそれ以外を混在させることできません。")
+                
+        return True
+
+    
     def r_txt(self,path):
         """テキストファイルのパスから中身の文字列を返す
 
@@ -293,14 +334,24 @@ class DataUtil:
         """
         if type(raw_str) != str:
             raise ValueError("文字列→リスト変換の引数は文字列のみ対応しています。")
-        if "\t" in raw_str:
-            raise ValueError("タブ文字が入っているので変換を中止しました。文字列から1次元リストに変換を想定のため")
-        if "," in raw_str:
-            raise ValueError("カンマ(,)が入っているので変換を中止します。文字列から1次元リストに変換を想定のため")
 
         data = [v.strip() for v in raw_str.split("\n")]
         data = [v for v in data if v != ""]
-        return data
+
+        isInComma = "," in raw_str
+        isInTab = "\t" in raw_str
+        
+        if isInComma and isInTab:
+            raise ValueError("「,」とタブ文字が混在しているものは変換できません。")
+        elif isInComma:
+            data = [v.split(",") for v in data]
+        elif isInTab:
+            data = [v.split("\t") for v in data]
+
+        if self.isSameContentLength_2dList(data):
+            return data
+        else:
+            raise ValueError("想定外の入力値 リストに変換できません。")
 
     @property
     def yyyymmdd(self):
