@@ -1,4 +1,4 @@
-from datetime import datetime
+import datetime
 from pprint import pprint
 import pickle
 import json
@@ -91,7 +91,7 @@ class DataUtil:
             else:
                 return False
     
-    def isSameContentLength_2dList(self,content_list):
+    def __isSameContentLength_2dList(self,content_list):
 
         """2次元Listの中身のListの個数が揃っているかのチェック
         
@@ -111,8 +111,12 @@ class DataUtil:
         content_list_len = len(content_list)
 
         if content_list_len > 0:
+
+            #リストの中身がリストである数を数える
+            list_in_list_len = len([v for v in content_list if type(v) == list ])
+
             #リスト型の中身が全てリスト型である場合
-            if len([v for v in content_list if type(v) == list]) == content_list_len:
+            if list_in_list_len == content_list_len:
                 
                 item_len = len(content_list[0])
                 item_len_index = 1
@@ -125,8 +129,8 @@ class DataUtil:
                     item_len_index = index
 
             else:
-                #リスト型の中身が全てリスト型でない場合で、List型が含まれる場合
-                if len([v for v in content_list if type(v) == list ]) > 0:
+                #elseに落ちた場合で、0個以上リスト型がある場合は、型混在パターンとなるので許容しない。
+                if list_in_list_len > 0:
                     raise ValueError(f"list型の中にList型とそれ以外を混在させることできません。")
                 
         return True
@@ -348,7 +352,7 @@ class DataUtil:
         elif isInTab:
             data = [v.split("\t") for v in data]
 
-        if self.isSameContentLength_2dList(data):
+        if self.__isSameContentLength_2dList(data):
             return data
         else:
             raise ValueError("想定外の入力値 リストに変換できません。")
@@ -356,4 +360,4 @@ class DataUtil:
     @property
     def yyyymmdd(self):
         """YYYYMMDD形式の日付文字列を返す"""
-        return datetime.now().strftime("%Y%m%d")
+        return datetime.datetime.now().strftime("%Y%m%d")
