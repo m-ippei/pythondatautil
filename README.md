@@ -58,6 +58,7 @@ r_auto,w_auto の自動読み込みおよび自動書き込み対象は⭐️マ
 * w_txt(some_string) テキスト書き込み
 * w_log(string or list ...) ログテキスト書き込み　追記+改行
 * w_list(list) リスト書き込み 改行区切り ⭐️
+* w_list_lf(list) w_listの改行コードがLFバージョン
 * w_csv(list) 2次元リスト書き込み　通常CSV書き込み 拡張子は.txt ※エクセルで直接開くことが可能な文字コードShift_JIS形式のcsv書き出しは対応していません ⭐️
 * w_csv_lf(list) w_csvの改行コードがLFバージョン
 * w_tsv(list) w_csvのtsvバージョン

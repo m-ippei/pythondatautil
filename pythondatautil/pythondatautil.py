@@ -264,22 +264,29 @@ class DataUtil:
             for v in content_list:
                 f.write(f"{v}\n")
 
+    def w_list_lf(self,content_list,filename = ""):
+        """改行区切りのリストを書き出す(改行コード:LF)
+        """
+        with open(self.__getFileNameHelper(filename),mode='w',encoding='utf-8',newline='\n') as f:
+            for v in content_list:
+                f.write(f"{v}\n")
+
     def w_csv(self,content_list,filename = ""):
         """CSVを書き出す
         """
-        with open(self.__getFileNameHelper(filename),mode='w',encoding='utf-8',newline="\n") as f:
+        with open(self.__getFileNameHelper(filename),mode='w',encoding='utf-8',newline='\n') as f:
             csv.writer(f).writerows(content_list)
 
     def w_csv_lf(self,content_list,filename = ""):
         """CSVを書き出す(改行コード:LF)
         """
-        with open(self.__getFileNameHelper(filename),mode='w',encoding='utf-8',newline="") as f:
+        with open(self.__getFileNameHelper(filename),mode='w',encoding='utf-8',newline='') as f:
             csv.writer(f,lineterminator="\n").writerows(content_list)
 
     def w_tsv(self,content_list,filename = ""):
         """TSVを書き出す
         """
-        with open(self.__getFileNameHelper(filename),mode='w',encoding='utf-8',newline="\n") as f:
+        with open(self.__getFileNameHelper(filename),mode='w',encoding='utf-8',newline='\n') as f:
             csv.writer(f,delimiter="\t").writerows(content_list)
 
     def w_dict(self,dic,filename = ""):
