@@ -24,9 +24,7 @@ python -m pip uninstall pythondatautil
 
 ### 使い方
 ```Python
-from pythondatautil import DataUtil
-
-du = DataUtil()
+from pythondatautil import du
 
 # テキストファイルの自動読み込み
 """tmp1.txt

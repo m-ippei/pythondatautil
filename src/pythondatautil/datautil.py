@@ -395,4 +395,4 @@ class DataUtil:
         """RFC3339とISO8601に則ったOSのタイムゾーン付きでミリセカンドまでの時刻を返す"""
         return datetime.datetime.now().astimezone().isoformat(timespec='milliseconds')
 
-
+du = DataUtil()
