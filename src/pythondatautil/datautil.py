@@ -322,31 +322,44 @@ class DataUtil:
         with open(self.__getFileNameHelper(filename,ext=".pickle"),mode='wb') as f:
             pickle.dump(dic,f)
 
-    def w_auto(self,any_data,filename=""):
+    def w_auto(self,any_data,filename="",isNullable=False):
         """データを書き出す関数
 
         引数に入れられたデータ型から自動でファイル形式を判断して書き出しを行う。
 
         Args:
-            any_data (any): データ[str,list,dict]
+            any_data (any): データ[str,list,set,dict]
             filename (str): ファイル名やファイルパス名(オプション)
+            isNullable (bool): Nullを許容するか Trueの時に何も書き出ししない
         
         """
-        if isinstance(any_data,str):
-            self.w_txt(any_data,filename)
-        elif isinstance(any_data,list):
+
+        if hasattr(any_data, '__len__'):
             if len(any_data) == 0:
-                raise ValueError("リストの中身が空です。")
-            
+                if isNullable:
+                    # 要素の数が空の場合かつ空を許容する場合はこれ以上処理を進めない
+                    return
+                else:
+                    raise ValueError(f"中身が空のため書き出し出来ません。 {type(any_data)} {any_data}")
+
+        if isinstance(any_data,set):
+            any_data = sorted(list(any_data))
+
+        if isinstance(any_data,list):
             if isinstance(any_data[0],list):
                 # ver0.0.9 デフォルトの書き出しをtsvに変更
                 self.w_tsv(any_data,filename)
             else:
                 self.w_list(any_data,filename)
+            
         elif isinstance(any_data,dict):
             self.w_json(any_data,filename)
+            
+        elif isinstance(any_data,str):
+            self.w_txt(any_data,filename)
+
         else:
-            raise ValueError("引数が文字列かリストか辞書ではありません。")
+            raise ValueError(f"書き出しが出来ませんでした。型:{type(any_data)}")
         
     def str_to_list(self,raw_str,isSideTrim = True):
         """改行区切りの文字列をリストにして返す。
