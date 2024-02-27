@@ -337,7 +337,7 @@ class DataUtil:
         if hasattr(any_data, '__len__'):
             if len(any_data) == 0:
                 if isNullable:
-                    # 要素の数が空の場合かつ空を許容する場合はこれ以上処理を進めない
+                    # 要素が空でも許容する場合
                     return
                 else:
                     raise ValueError(f"中身が空のため書き出し出来ません。 {type(any_data)} {any_data}")
@@ -347,7 +347,7 @@ class DataUtil:
 
         if isinstance(any_data,list):
             if isinstance(any_data[0],list):
-                # ver0.0.9 デフォルトの書き出しをtsvに変更
+                # デフォルトの書き出しをtsvに
                 self.w_tsv(any_data,filename)
             else:
                 self.w_list(any_data,filename)

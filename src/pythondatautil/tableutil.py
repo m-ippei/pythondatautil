@@ -6,6 +6,11 @@ class TableUtil:
     """TableUtilクラス"""
 
     def __init__(self,filepath,read_encoding='utf-8'):
+        """CSVまたはTSVファイルのヘッダー行を読み込んでキー名とインデックス番号のマッピングをする
+
+        read_encoding -> utf-8,cp932
+        """
+        
         self.filepath = filepath
         self.raw_header_list = None
 
