@@ -4,11 +4,11 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "pythondatautil"
-version = "0.0.14"
+version = "0.0.15"
 authors = [
   { name="Ippei Morita", email="ippei0923@gmail.com" },
 ]
-description = "Python Utility. File IO, Data Converter..."
+description = "Libraries to simplify file processing in Python"
 readme = "README.md"
 requires-python = ">=3.9"
 classifiers = [
@@ -16,3 +16,6 @@ classifiers = [
     "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
 ]
+
+[project.urls]
+Homepage = "https://github.com/m-ippei/pythondatautil"

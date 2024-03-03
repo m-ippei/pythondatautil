@@ -1,2 +1,2 @@
-from .datautil import *
-from .tableutil import *
+from .datautil import du
+from .tableutil import TableUtil

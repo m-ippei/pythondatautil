@@ -304,6 +304,12 @@ class DataUtil:
         with open(self.__getFileNameHelper(filename),mode='w',encoding='utf-8',newline='\n') as f:
             csv.writer(f,delimiter="\t").writerows(content_list)
 
+    def w_tsv_lf(self,content_list,filename = ""):
+        """TSVを書き出す(改行コード:LF)
+        """
+        with open(self.__getFileNameHelper(filename),mode='w',encoding='utf-8',newline='') as f:
+            csv.writer(f,delimiter="\t",lineterminator="\n").writerows(content_list)
+
     def w_dict(self,dic,filename = ""):
         """辞書型を整形してテキストファイルで書き出す
         """

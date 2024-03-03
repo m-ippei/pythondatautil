@@ -64,6 +64,7 @@ r_auto,w_auto の自動読み込みおよび自動書き込みの対象は⭐️
 * w_csv(list) 2次元リスト書き込み　通常CSV書き込み 拡張子は.txt
 * w_csv_lf(list) w_csvの改行コードがLFバージョン
 * w_tsv(list) w_csvのtsvバージョン ⭐️w_autoは2次元リストの場合
+* w_tsv(list) w_tsvの改行コードがLFバージョン
 * w_dict(dict) 辞書型を整形してテキストファイルで書き出す(pprintによるファイル書き出し) 
 * w_json(dict or list) 辞書型またはリスト型をJSONファイルで書き出す ⭐️w_autoは辞書型の場合
 * w_pickle(dict or list) 辞書型またはリスト型をPickleファイルで書き出す
