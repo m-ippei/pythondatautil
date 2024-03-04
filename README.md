@@ -45,7 +45,8 @@ du.w_auto([1,2,3])
 ```
 
 ### メモ
-r_auto,w_auto の自動読み込みおよび自動書き込みの対象は⭐️マーク その他は直接指定が必要
+r_auto,w_auto の自動読み込みおよび自動書き込みの対象は⭐️マーク その他は直接指定が必要  
+[その他APIリファレンス詳細(ソースコードから自動生成)]( https://m-ippei.github.io/pythondatautil/pythondatautil.html)
 
 #### r:Read系
 * r_auto(path_string) 拡張子または中身から自動変換読み込み
