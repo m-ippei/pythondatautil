@@ -1,0 +1,29 @@
+pythondatautil package
+======================
+
+Submodules
+----------
+
+pythondatautil.datautil module
+------------------------------
+
+.. automodule:: pythondatautil.datautil
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+pythondatautil.tableutil module
+-------------------------------
+
+.. automodule:: pythondatautil.tableutil
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: pythondatautil
+   :members:
+   :undoc-members:
+   :show-inheritance:

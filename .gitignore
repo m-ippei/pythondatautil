@@ -161,6 +161,7 @@ cython_debug/
 
 
 # Others
+docs_src
 tests/
 notes/
 test.py
