@@ -1,17 +1,20 @@
 # pythondatautil
 Pythonのファイル処理を簡単にするためのライブラリ
 
-
-## シェルコマンド一覧
 #### インストール
+
 ```console
-python -m pip install git+https://github.com/m-ippei/pythondatautil.git
+python -m pip install pythondatautil
 ```
+
 #### アップデート
+
 ```console
-python -m pip install git+https://github.com/m-ippei/pythondatautil.git -U
+python -m pip install pythondatautil -U
 ```
+
 #### アンインストール
+
 ```console
 python -m pip uninstall pythondatautil
 ```
@@ -31,6 +34,7 @@ from pythondatautil import du
 Hi!
 """
 
+# tmp1.txtというファイルを読み込む(パスを指定する)
 data = du.r_auto("tmp1.txt")
 print(data) # Hi!
 
@@ -128,6 +132,20 @@ python -m build
 Wheelインストール
 ```console
 python -m pip install <wheel>
+```
+
+## シェルコマンド一覧(GitHubからパッケージインストール等をする場合)
+#### インストール
+```console
+python -m pip install git+https://github.com/m-ippei/pythondatautil.git
+```
+#### アップデート
+```console
+python -m pip install git+https://github.com/m-ippei/pythondatautil.git -U
+```
+#### アンインストール
+```console
+python -m pip uninstall pythondatautil
 ```
 
 ## 備考

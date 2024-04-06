@@ -160,7 +160,7 @@ class DataUtil:
         Returns:
             list (list): リスト
         """
-        with open(path,mode='r',encoding=read_encoding) as f:
+        with open(path,mode='r',encoding=read_encoding,newline='') as f:
             return [v for v in csv.reader(f)]
 
     def r_tsv(self,path) -> list:
@@ -172,7 +172,7 @@ class DataUtil:
         Returns:
             list (list): リスト
         """
-        with open(path,mode='r',encoding='utf-8') as f:
+        with open(path,mode='r',encoding='utf-8',newline='') as f:
             return [v for v in csv.reader(f,delimiter="\t")]
 
     def r_json(self,json_path):
