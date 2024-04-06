@@ -19,7 +19,7 @@ python -m pip install pythondatautil -U
 python -m pip uninstall pythondatautil
 ```
 
-## 簡易リファレンス DataUtil
+## 簡易リファレンス DataUtil(du)
 
 ### 概要
 
