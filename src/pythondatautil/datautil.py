@@ -30,7 +30,7 @@ class DataUtil:
 
         # tmp+数字のファイルリストを抽出して、なおかつそこから数字を取り出し、最も大きい数字から一つ足したものを新しいテキストファイルの追加数字とする
 
-        tmp_num_list = []
+        tmp_num_list: list[int] = []
 
         for v in os.listdir(os.getcwd()):
             number = re_obj.search(v)
@@ -39,7 +39,7 @@ class DataUtil:
 
         return f"tmp{max([0] if tmp_num_list == [] else tmp_num_list) + 1}{ext}"
 
-    def __getFileNameHelper(self, order_file_name, ext=".txt"):
+    def __getFileNameHelper(self, order_file_name: str, ext: str = ".txt"):
         """適切なファイル名を取得する関数
 
         ・ファイル名の指定が無ければ、tmpファイル名を取得
@@ -57,9 +57,6 @@ class DataUtil:
 
         file_name = order_file_name
         file_name_head, order_ext = os.path.splitext(file_name)
-
-        if not isinstance(order_file_name, str):
-            raise ValueError("ファイル名は文字列である必要があります")
 
         if "" == order_file_name:
             return self.__getTmpName(ext)
@@ -87,7 +84,7 @@ class DataUtil:
 
         return file_name
 
-    def __isTSV(self, path):
+    def __isTSV(self, path: str):
         """TSVのパスを読み込んでTSVかどうかを判断する
 
         Args:
@@ -146,7 +143,7 @@ class DataUtil:
 
         return True
 
-    def r_txt(self, path):
+    def r_txt(self, path: str):
         """テキストファイルのパスから中身の文字列を返す
 
         Args:
@@ -158,7 +155,7 @@ class DataUtil:
         with open(path, mode="r", encoding="utf-8") as f:
             return f.read()
 
-    def r_csv(self, path, read_encoding="utf-8") -> list:
+    def r_csv(self, path: str, read_encoding: str = "utf-8") -> list:
         """CSVのパスを読み込んでリストにして返す
 
         read_encoding -> utf-8,cp932
@@ -172,7 +169,7 @@ class DataUtil:
         with open(path, mode="r", encoding=read_encoding, newline="") as f:
             return [v for v in csv.reader(f)]
 
-    def r_tsv(self, path) -> list:
+    def r_tsv(self, path: str) -> list:
         """TSVのパスを読み込んでリストにして返す
 
         Args:
@@ -184,7 +181,7 @@ class DataUtil:
         with open(path, mode="r", encoding="utf-8", newline="") as f:
             return [v for v in csv.reader(f, delimiter="\t")]
 
-    def r_json(self, json_path):
+    def r_json(self, json_path: str):
         """JSONのパスを読み込んで辞書型にして返す
 
         Args:
@@ -196,7 +193,7 @@ class DataUtil:
         with open(json_path, mode="r", encoding="utf-8") as f:
             return json.load(f)
 
-    def r_pickle(self, pickle_path):
+    def r_pickle(self, pickle_path: str):
         """Pickleファイルのパスを読み込んで辞書型またはリスト型にして返す
 
         Args:
@@ -208,7 +205,7 @@ class DataUtil:
         with open(pickle_path, mode="rb") as f:
             return pickle.load(f)
 
-    def r_auto(self, path):
+    def r_auto(self, path: str):
         """データを読み込む関数
 
         引数に入れられたパスから自動でファイル形式を判断して読み込みを行ってデータを返す
@@ -253,12 +250,12 @@ class DataUtil:
         else:
             raise ValueError(f"自動で読込処理ができない値: {os.path.basename(path)}")
 
-    def w_txt(self, txt, filename=""):
+    def w_txt(self, txt: str, filename: str = ""):
         """テキストファイルを書き出す"""
         with open(self.__getFileNameHelper(filename), mode="w", encoding="utf-8") as f:
             f.write(txt)
 
-    def w_log(self, content, filename=""):
+    def w_log(self, content, filename: str = ""):
         """テキストをログ形式で書き出す"""
 
         if isinstance(content, str):
@@ -275,13 +272,13 @@ class DataUtil:
         with open(self.__getFileNameHelper(filename), mode="a", encoding="utf-8") as f:
             f.write(f"{content}\n")
 
-    def w_list(self, content_list, filename=""):
+    def w_list(self, content_list, filename: str = ""):
         """改行区切りのリストを書き出す"""
         with open(self.__getFileNameHelper(filename), mode="w", encoding="utf-8") as f:
             for v in content_list:
                 f.write(f"{v}\n")
 
-    def w_list_lf(self, content_list, filename=""):
+    def w_list_lf(self, content_list, filename: str = ""):
         """改行区切りのリストを書き出す(改行コード:LF)"""
         with open(
             self.__getFileNameHelper(filename), mode="w", encoding="utf-8", newline="\n"
@@ -289,7 +286,7 @@ class DataUtil:
             for v in content_list:
                 f.write(f"{v}\n")
 
-    def w_csv(self, content_list, filename="", write_encoding="utf-8"):
+    def w_csv(self, content_list, filename: str = "", write_encoding: str = "utf-8"):
         """CSVを書き出す
 
         write_encoding -> utf-8,cp932
@@ -302,7 +299,7 @@ class DataUtil:
         ) as f:
             csv.writer(f).writerows(content_list)
 
-    def w_csv_lf(self, content_list, filename="", write_encoding="utf-8"):
+    def w_csv_lf(self, content_list, filename: str = "", write_encoding="utf-8"):
         """CSVを書き出す(改行コード:LF)
 
         write_encoding -> utf-8,cp932
@@ -315,38 +312,38 @@ class DataUtil:
         ) as f:
             csv.writer(f, lineterminator="\n").writerows(content_list)
 
-    def w_tsv(self, content_list, filename=""):
+    def w_tsv(self, content_list, filename: str = ""):
         """TSVを書き出す"""
         with open(
             self.__getFileNameHelper(filename), mode="w", encoding="utf-8", newline="\n"
         ) as f:
             csv.writer(f, delimiter="\t").writerows(content_list)
 
-    def w_tsv_lf(self, content_list, filename=""):
+    def w_tsv_lf(self, content_list, filename: str = ""):
         """TSVを書き出す(改行コード:LF)"""
         with open(
             self.__getFileNameHelper(filename), mode="w", encoding="utf-8", newline=""
         ) as f:
             csv.writer(f, delimiter="\t", lineterminator="\n").writerows(content_list)
 
-    def w_dict(self, dic, filename=""):
+    def w_dict(self, dic, filename: str = ""):
         """辞書型を整形してテキストファイルで書き出す"""
         with open(self.__getFileNameHelper(filename), mode="w", encoding="utf-8") as f:
             pprint(dic, stream=f)
 
-    def w_json(self, dic_or_list, filename=""):
+    def w_json(self, dic_or_list, filename: str = ""):
         """辞書型またはリスト型をJSONファイルで書き出す"""
         with open(
             self.__getFileNameHelper(filename, ext=".json"), mode="w", encoding="utf-8"
         ) as f:
             json.dump(dic_or_list, f, indent=2, ensure_ascii=False)
 
-    def w_pickle(self, dic, filename=""):
+    def w_pickle(self, dic, filename: str = ""):
         """辞書型またはリスト型をPickleファイルで書き出す"""
         with open(self.__getFileNameHelper(filename, ext=".pickle"), mode="wb") as f:
             pickle.dump(dic, f)
 
-    def w_auto(self, any_data, filename="", isNullable=False):
+    def w_auto(self, any_data, filename: str = "", isNullable: bool = False):
         """データを書き出す関数
 
         引数に入れられたデータ型から自動でファイル形式を判断して書き出しを行う。
@@ -387,7 +384,7 @@ class DataUtil:
         else:
             raise ValueError(f"書き出しが出来ませんでした。型:{type(any_data)}")
 
-    def str_to_list(self, raw_str, isSideTrim=True):
+    def str_to_list(self, raw_str: str, isSideTrim: bool = True):
         """改行区切りの文字列をリストにして返す。
 
         改行区切りの文字列を空白を取り除いてリストにして返す。
