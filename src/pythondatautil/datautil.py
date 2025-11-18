@@ -30,11 +30,12 @@ class DataUtil:
 
         # tmp+数字のファイルリストを抽出して、なおかつそこから数字を取り出し、最も大きい数字から一つ足したものを新しいテキストファイルの追加数字とする
 
-        tmp_num_list = [
-            int(re_obj2.sub("", re_obj.search(v).group()))
-            for v in os.listdir(os.getcwd())
-            if re_obj.search(v)
-        ]
+        tmp_num_list = []
+
+        for v in os.listdir(os.getcwd()):
+            number = re_obj.search(v)
+            if number is not None:
+                tmp_num_list.append(int(re_obj2.sub("", number.group())))
 
         return f"tmp{max([0] if tmp_num_list == [] else tmp_num_list) + 1}{ext}"
 
