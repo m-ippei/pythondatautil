@@ -9,21 +9,29 @@ pythondatautil.datautil module
 
 .. automodule:: pythondatautil.datautil
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:
 
 pythondatautil.tableutil module
 -------------------------------
 
 .. automodule:: pythondatautil.tableutil
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:
+
+pythondatautil.test\_datautil module
+------------------------------------
+
+.. automodule:: pythondatautil.test_datautil
+   :members:
+   :show-inheritance:
+   :undoc-members:
 
 Module contents
 ---------------
 
 .. automodule:: pythondatautil
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:
