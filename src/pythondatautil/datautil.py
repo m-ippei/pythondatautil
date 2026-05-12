@@ -220,7 +220,12 @@ class DataUtil:
 
     def w_txt(self, txt: str, filename: str = "") -> None:
         """テキストファイルを書き出す"""
-        Path(self.__getFileNameHelper(filename, ext=".txt")).write_text(
+        ext = ".txt"
+
+        if Path(filename).suffix == ".md":
+            ext = ".md"
+
+        Path(self.__getFileNameHelper(filename, ext=ext)).write_text(
             txt, encoding="utf-8"
         )
 
