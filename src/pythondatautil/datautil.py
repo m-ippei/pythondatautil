@@ -3,6 +3,7 @@ import datetime
 import json
 import pickle
 import re
+from typing import Any
 from pathlib import Path
 from pprint import pprint
 
@@ -49,8 +50,6 @@ class DataUtil:
 
 
         """
-        if not isinstance(order_file_name, str):
-            raise ValueError("ファイル名は文字列である必要があります")
 
         if order_file_name == "":
             return self.__getTmpName(ext)
@@ -91,7 +90,7 @@ class DataUtil:
         """
         return "\t" in Path(path).read_text(encoding="utf-8").splitlines()[0]
 
-    def __isSameContentLength_2dList(self, content_list: list) -> bool:
+    def __isSameContentLength_2dList(self, content_list: list[Any]) -> bool:
         """2次元Listの中身のListの個数が揃っているかのチェック
 
         ・List型のデータが全てList型として入っている場合は、それぞれの個数が合っているかの確認
@@ -103,8 +102,6 @@ class DataUtil:
         Returns:
             bool
         """
-        if not isinstance(content_list, list):
-            raise ValueError("引数:content_listはlist型である必要があります。")
 
         if not content_list:
             return True
@@ -135,7 +132,7 @@ class DataUtil:
         """
         return Path(path).read_text(encoding="utf-8")
 
-    def r_csv(self, path: str | Path, read_encoding: str = "utf-8") -> list:
+    def r_csv(self, path: str | Path, read_encoding: str = "utf-8") -> list[Any]:
         """CSVのパスを読み込んでリストにして返す
 
         read_encoding -> utf-8,cp932
@@ -150,7 +147,7 @@ class DataUtil:
         with Path(path).open(mode="r", encoding=read_encoding, newline="") as f:
             return list(csv.reader(f))
 
-    def r_tsv(self, path: str | Path) -> list:
+    def r_tsv(self, path: str | Path) -> list[Any]:
         """TSVのパスを読み込んでリストにして返す
 
         Args:
@@ -162,7 +159,7 @@ class DataUtil:
         with Path(path).open(mode="r", encoding="utf-8", newline="") as f:
             return list(csv.reader(f, delimiter="\t"))
 
-    def r_json(self, json_path: str | Path) -> dict:
+    def r_json(self, json_path: str | Path) -> dict[Any, Any]:
         """JSONのパスを読み込んで辞書型にして返す
 
         Args:
@@ -232,11 +229,9 @@ class DataUtil:
             txt, encoding="utf-8"
         )
 
-    def w_log(self, content, filename: str = "") -> None:
+    def w_log(self, content: str, filename: str = "") -> None:
         """テキストをログ形式で書き出す"""
-        if isinstance(content, str):
-            pass
-        elif isinstance(content, (list, tuple)):
+        if isinstance(content, (list, tuple)):
             content = ",".join(str(v) for v in content)
         else:
             content = str(content)
@@ -250,14 +245,14 @@ class DataUtil:
         ) as f:
             f.write(f"{content}\n")
 
-    def w_list(self, content_list: list, filename: str = "") -> None:
+    def w_list(self, content_list: list[Any], filename: str = "") -> None:
         """改行区切りのリストを書き出す"""
         text = "".join(f"{v}\n" for v in content_list)
         Path(self.__getFileNameHelper(filename, ext=".txt")).write_text(
             text, encoding="utf-8"
         )
 
-    def w_list_lf(self, content_list: list, filename: str = "") -> None:
+    def w_list_lf(self, content_list: list[Any], filename: str = "") -> None:
         """改行区切りのリストを書き出す(改行コード:LF)"""
         with Path(self.__getFileNameHelper(filename, ext=".txt")).open(
             mode="w", encoding="utf-8", newline="\n"
@@ -266,7 +261,7 @@ class DataUtil:
                 f.write(f"{v}\n")
 
     def w_csv(
-        self, content_list: list, filename: str = "", write_encoding: str = "utf-8"
+        self, content_list: list[Any], filename: str = "", write_encoding: str = "utf-8"
     ) -> None:
         """CSVを書き出す
 
@@ -279,7 +274,7 @@ class DataUtil:
             csv.writer(f).writerows(content_list)
 
     def w_csv_lf(
-        self, content_list: list, filename: str = "", write_encoding: str = "utf-8"
+        self, content_list: list[Any], filename: str = "", write_encoding: str = "utf-8"
     ) -> None:
         """CSVを書き出す(改行コード:LF)
 
@@ -290,42 +285,49 @@ class DataUtil:
         ) as f:
             csv.writer(f, lineterminator="\n").writerows(content_list)
 
-    def w_tsv(self, content_list: list, filename: str = "") -> None:
+    def w_tsv(self, content_list: list[Any], filename: str = "") -> None:
         """TSVを書き出す"""
         with Path(self.__getFileNameHelper(filename, ext=".tsv")).open(
             mode="w", encoding="utf-8", newline="\n"
         ) as f:
             csv.writer(f, delimiter="\t").writerows(content_list)
 
-    def w_tsv_lf(self, content_list: list, filename: str = "") -> None:
+    def w_tsv_lf(self, content_list: list[Any], filename: str = "") -> None:
         """TSVを書き出す(改行コード:LF)"""
         with Path(self.__getFileNameHelper(filename, ext=".tsv")).open(
             mode="w", encoding="utf-8", newline=""
         ) as f:
             csv.writer(f, delimiter="\t", lineterminator="\n").writerows(content_list)
 
-    def w_dict(self, dic: dict, filename: str = "") -> None:
+    def w_dict(self, dic: dict[Any, Any], filename: str = "") -> None:
         """辞書型を整形してテキストファイルで書き出す"""
         with Path(self.__getFileNameHelper(filename, ext=".txt")).open(
             mode="w", encoding="utf-8"
         ) as f:
             pprint(dic, stream=f)
 
-    def w_json(self, dic_or_list, filename: str = "") -> None:
+    def w_json(
+        self, dic_or_list: dict[Any, Any] | list[Any], filename: str = ""
+    ) -> None:
         """辞書型またはリスト型をJSONファイルで書き出す"""
         text = json.dumps(dic_or_list, indent=2, ensure_ascii=False)
         Path(self.__getFileNameHelper(filename, ext=".json")).write_text(
             text, encoding="utf-8"
         )
 
-    def w_pickle(self, dic, filename: str = "") -> None:
+    def w_pickle(self, dic: dict[Any, Any], filename: str = "") -> None:
         """辞書型またはリスト型をPickleファイルで書き出す"""
         with Path(self.__getFileNameHelper(filename, ext=".pickle")).open(
             mode="wb"
         ) as f:
             pickle.dump(dic, f)
 
-    def w_auto(self, any_data, filename: str = "", isNullable: bool = False) -> None:
+    def w_auto(
+        self,
+        any_data: dict[Any, Any] | list[Any] | str | None,
+        filename: str = "",
+        isNullable: bool = False,
+    ) -> None:
         """データを書き出す関数
 
         引数に入れられたデータ型から自動でファイル形式を判断して書き出しを行う。
@@ -337,9 +339,23 @@ class DataUtil:
 
 
         """
-        if hasattr(any_data, "__len__") and len(any_data) == 0:
-            if isNullable:
-                return
+        if isinstance(any_data, dict) or isinstance(any_data, list):
+            if hasattr(any_data, "__len__") and len(any_data) == 0:
+                if isNullable:
+                    return
+                else:
+                    raise ValueError(
+                        f"中身が空のため書き出し出来ません。 {type(any_data)} {any_data}"
+                    )
+        else:
+            if isinstance(any_data, str):
+                if any_data == "":
+                    if isNullable:
+                        return
+                    else:
+                        raise ValueError(
+                            f"中身が空のため書き出し出来ません。 {type(any_data)} {any_data}"
+                        )
             else:
                 raise ValueError(
                     f"中身が空のため書き出し出来ません。 {type(any_data)} {any_data}"
@@ -355,12 +371,12 @@ class DataUtil:
                 self.w_list(any_data, filename)
         elif isinstance(any_data, dict):
             self.w_json(any_data, filename)
-        elif isinstance(any_data, str):
+        elif isinstance(any_data, str):  # type: ignore
             self.w_txt(any_data, filename)
         else:
             raise ValueError(f"書き出しが出来ませんでした。型:{type(any_data)}")
 
-    def str_to_list(self, raw_str: str, isSideTrim: bool = True) -> list:
+    def str_to_list(self, raw_str: str, isSideTrim: bool = True) -> list[Any]:
         """改行区切りの文字列をリストにして返す。
 
         改行区切りの文字列を空白を取り除いてリストにして返す。
@@ -372,8 +388,6 @@ class DataUtil:
         Returns:
             list (list): リスト
         """
-        if not isinstance(raw_str, str):
-            raise ValueError("文字列→リスト変換の引数は文字列のみ対応しています。")
 
         lines = raw_str.split("\n")
         data = [v.strip() if isSideTrim else v for v in lines]
@@ -402,8 +416,6 @@ class DataUtil:
     @property
     def now(self) -> str:
         """RFC3339とISO8601に則ったOSのタイムゾーン付きでミリセカンドまでの時刻を返す"""
-        return datetime.datetime.now().astimezone().isoformat(timespec="milliseconds")
-
         return datetime.datetime.now().astimezone().isoformat(timespec="milliseconds")
 
 
