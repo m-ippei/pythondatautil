@@ -43,8 +43,10 @@ class DataUtil:
             order_file_name (str): 空文字またはパス名またはファイル名
             ext (str): 指定の拡張子
 
+
         Returns:
             file_name (str): ファイル(パス)名
+
 
         """
         if not isinstance(order_file_name, str):
@@ -194,6 +196,7 @@ class DataUtil:
         Returns:
             any (any): データ[list dict]
 
+
         """
         p = Path(path)
         ext = p.suffix
@@ -267,6 +270,7 @@ class DataUtil:
     ) -> None:
         """CSVを書き出す
 
+
         write_encoding -> utf-8,cp932
         """
         with Path(self.__getFileNameHelper(filename, ext=".csv")).open(
@@ -330,6 +334,7 @@ class DataUtil:
             any_data (any): データ[str,list,set,dict]
             filename (str): ファイル名やファイルパス名(オプション)
             isNullable (bool): Nullを許容するか Trueの時に何も書き出ししない
+
 
         """
         if hasattr(any_data, "__len__") and len(any_data) == 0:
@@ -397,6 +402,8 @@ class DataUtil:
     @property
     def now(self) -> str:
         """RFC3339とISO8601に則ったOSのタイムゾーン付きでミリセカンドまでの時刻を返す"""
+        return datetime.datetime.now().astimezone().isoformat(timespec="milliseconds")
+
         return datetime.datetime.now().astimezone().isoformat(timespec="milliseconds")
 
 
