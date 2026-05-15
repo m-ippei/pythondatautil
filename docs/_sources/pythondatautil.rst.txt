@@ -20,14 +20,6 @@ pythondatautil.tableutil module
    :show-inheritance:
    :undoc-members:
 
-pythondatautil.test\_datautil module
-------------------------------------
-
-.. automodule:: pythondatautil.test_datautil
-   :members:
-   :show-inheritance:
-   :undoc-members:
-
 Module contents
 ---------------
 

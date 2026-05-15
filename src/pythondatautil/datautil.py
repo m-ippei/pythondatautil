@@ -34,7 +34,7 @@ class DataUtil:
         return f"tmp{max(tmp_num_list, default=0) + 1}{ext}"
 
     def __getFileNameHelper(
-        self, order_file_name: str | Path, ext: str = ".txt"
+        self, order_file_name: str | Path | None = None, ext: str = ".txt"
     ) -> str:
         """適切なファイル名を取得する関数
 
@@ -53,7 +53,7 @@ class DataUtil:
 
         """
 
-        if order_file_name == "":
+        if order_file_name == "" or order_file_name is None:
             return self.__getTmpName(ext)
 
         path = Path(order_file_name)
@@ -223,18 +223,18 @@ class DataUtil:
         else:
             raise ValueError(f"自動で読込処理ができない値: {p.name}")
 
-    def w_txt(self, txt: str, filename: str | Path) -> None:
+    def w_txt(self, txt: str, filename: str | Path | None = None) -> None:
         """テキストファイルを書き出す"""
         ext = ".txt"
 
-        if Path(filename).suffix == ".md":
+        if filename is not None and Path(filename).suffix == ".md":
             ext = ".md"
 
         Path(self.__getFileNameHelper(filename, ext=ext)).write_text(
             txt, encoding="utf-8"
         )
 
-    def w_log(self, content: str, filename: str | Path) -> None:
+    def w_log(self, content: str, filename: str | Path | None = None) -> None:
         """テキストをログ形式で書き出す"""
         if isinstance(content, (list, tuple)):
             content = ",".join(str(v) for v in content)
@@ -250,14 +250,18 @@ class DataUtil:
         ) as f:
             f.write(f"{content}\n")
 
-    def w_list(self, content_list: list[Any], filename: str | Path) -> None:
+    def w_list(
+        self, content_list: list[Any], filename: str | Path | None = None
+    ) -> None:
         """改行区切りのリストを書き出す"""
         text = "".join(f"{v}\n" for v in content_list)
         Path(self.__getFileNameHelper(filename, ext=".txt")).write_text(
             text, encoding="utf-8"
         )
 
-    def w_list_lf(self, content_list: list[Any], filename: str | Path) -> None:
+    def w_list_lf(
+        self, content_list: list[Any], filename: str | Path | None = None
+    ) -> None:
         """改行区切りのリストを書き出す(改行コード:LF)"""
         with Path(self.__getFileNameHelper(filename, ext=".txt")).open(
             mode="w", encoding="utf-8", newline="\n"
@@ -268,7 +272,7 @@ class DataUtil:
     def w_csv(
         self,
         content_list: list[Any],
-        filename: str | Path,
+        filename: str | Path | None = None,
         write_encoding: str = "utf-8",
     ) -> None:
         """CSVを書き出す
@@ -284,7 +288,7 @@ class DataUtil:
     def w_csv_lf(
         self,
         content_list: list[Any],
-        filename: str | Path,
+        filename: str | Path | None = None,
         write_encoding: str = "utf-8",
     ) -> None:
         """CSVを書き出す(改行コード:LF)
@@ -296,21 +300,25 @@ class DataUtil:
         ) as f:
             csv.writer(f, lineterminator="\n").writerows(content_list)
 
-    def w_tsv(self, content_list: list[Any], filename: str | Path) -> None:
+    def w_tsv(
+        self, content_list: list[Any], filename: str | Path | None = None
+    ) -> None:
         """TSVを書き出す"""
         with Path(self.__getFileNameHelper(filename, ext=".tsv")).open(
             mode="w", encoding="utf-8", newline="\n"
         ) as f:
             csv.writer(f, delimiter="\t").writerows(content_list)
 
-    def w_tsv_lf(self, content_list: list[Any], filename: str | Path) -> None:
+    def w_tsv_lf(
+        self, content_list: list[Any], filename: str | Path | None = None
+    ) -> None:
         """TSVを書き出す(改行コード:LF)"""
         with Path(self.__getFileNameHelper(filename, ext=".tsv")).open(
             mode="w", encoding="utf-8", newline=""
         ) as f:
             csv.writer(f, delimiter="\t", lineterminator="\n").writerows(content_list)
 
-    def w_dict(self, dic: dict[Any, Any], filename: str | Path) -> None:
+    def w_dict(self, dic: dict[Any, Any], filename: str | Path | None = None) -> None:
         """辞書型を整形してテキストファイルで書き出す"""
         with Path(self.__getFileNameHelper(filename, ext=".txt")).open(
             mode="w", encoding="utf-8"
@@ -318,7 +326,9 @@ class DataUtil:
             pprint(dic, stream=f)
 
     def w_json(
-        self, dic_or_list: dict[Any, Any] | list[Any], filename: str | Path
+        self,
+        dic_or_list: dict[Any, Any] | list[Any],
+        filename: str | Path | None = None,
     ) -> None:
         """辞書型またはリスト型をJSONファイルで書き出す"""
         text = json.dumps(dic_or_list, indent=2, ensure_ascii=False)
@@ -326,7 +336,7 @@ class DataUtil:
             text, encoding="utf-8"
         )
 
-    def w_pickle(self, dic: dict[Any, Any], filename: str | Path) -> None:
+    def w_pickle(self, dic: dict[Any, Any], filename: str | Path | None = None) -> None:
         """辞書型またはリスト型をPickleファイルで書き出す"""
         with Path(self.__getFileNameHelper(filename, ext=".pickle")).open(
             mode="wb"
@@ -336,7 +346,7 @@ class DataUtil:
     def w_auto(
         self,
         any_data: dict[Any, Any] | list[Any] | str | None,
-        filename: str | Path,
+        filename: str | Path | None = None,
         isNullable: bool = False,
     ) -> None:
         """データを書き出す関数
