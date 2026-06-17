@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "pythondatautil"
-version = "0.0.24"
+version = "0.0.25"
 authors = [
   { name="Ippei Morita", email="ippei0923@gmail.com" },
 ]
@@ -20,3 +20,6 @@ classifiers = [
 [project.urls]
 Homepage = "https://github.com/m-ippei/pythondatautil"
 Documentation = "https://m-ippei.github.io/pythondatautil"
+
+[tool.setuptools.package-data]
+pythondatautil = ["py.typed","*.pyi"]
