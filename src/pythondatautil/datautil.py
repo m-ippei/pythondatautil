@@ -175,7 +175,7 @@ class DataUtil:
         """
         return json.loads(Path(json_path).read_text(encoding="utf-8"))
 
-    def r_pickle(self, pickle_path: str | Path):
+    def r_pickle(self, pickle_path: str | Path) -> dict[Any, Any] | list[Any]:
         """Pickleファイルのパスを読み込んで辞書型またはリスト型にして返す
 
         Args:
@@ -187,7 +187,7 @@ class DataUtil:
         with Path(pickle_path).open(mode="rb") as f:
             return pickle.load(f)
 
-    def r_auto(self, path: str | Path):
+    def r_auto(self, path: str | Path) -> dict[Any, Any] | list[Any]:
         """データを読み込む関数
 
         引数に入れられたパスから自動でファイル形式を判断して読み込みを行ってデータを返す

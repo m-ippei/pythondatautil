@@ -50,7 +50,7 @@ class TableUtil:
         for row in self.header_list:
             print("\t".join([str(v) for v in row]))
 
-    def wirte_header(self, filename: Path | str | None = None):
+    def wirte_header(self, filename: Path | str | None = None) -> None:
         """テーブルのインデックス情報を書き出す。
 
         filenameを省略すると、読み込んでいるファイル名を利用してインデックス情報をテキストファイルに書き出す。
@@ -64,7 +64,7 @@ class TableUtil:
         ) as f:
             csv.writer(f, delimiter="\t").writerows(self.header_list)
 
-    def getIndex(self, key: str):
+    def getIndex(self, key: str) -> int:
         """テーブルのキーからインデックス番号を取得
 
         存在しないキーやキー名が重複しているものを指定するとエラー

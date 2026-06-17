@@ -1,0 +1,13 @@
+from _typeshed import Incomplete
+from pathlib import Path
+
+class TableUtil:
+    filepath: Incomplete
+    raw_header_list: Incomplete
+    counter_obj: Incomplete
+    header_list: list[tuple[int, str]]
+    header_dict: dict[str, int]
+    def __init__(self, filepath: str | Path, read_encoding: str = 'utf-8') -> None: ...
+    def show_header(self) -> None: ...
+    def wirte_header(self, filename: Path | str | None = None) -> None: ...
+    def getIndex(self, key: str) -> int: ...
